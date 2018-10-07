@@ -84,16 +84,14 @@ public class DAO {
 		//throw new UnsupportedOperationException("Pas encore implémenté");
                 String sql = "SELECT COUNT(QUANTITY) AS ORDERS FROM PURCHASE_ORDER WHERE CUSTOMER_ID = ?";
                 int result=0;
-                try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
-			PreparedStatement stmt = connection.prepareStatement(sql); // On crée un statement pour exécuter une requête
-			// Un ResultSet pour parcourir les enregistrements du résultat
+                try (Connection connection = myDataSource.getConnection(); 
+			PreparedStatement stmt = connection.prepareStatement(sql); 
 			) {
                          stmt.setInt(1, customerId);
                         try {
                             ResultSet rs = stmt.executeQuery();
-                            if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
-				// On récupère le champ NUMBER de l'enregistrement courant
-				result = rs.getInt("ORDERS");
+                            if (rs.next()) { 
+                                result = rs.getInt("ORDERS");
                             }
                         }  catch (SQLException ex) {
                                 Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
@@ -116,19 +114,16 @@ public class DAO {
 	 * @throws DAOException
 	 */
 	CustomerEntity findCustomer(int customerID) throws DAOException {
-		//throw new UnsupportedOperationException("Pas encore implémenté");
                 String sql = "SELECT NAME AS NOM,ADDRESSLINE1 AS ADRESSE  FROM CUSTOMER WHERE CUSTOMER_ID = ? ";
                 String name = "";
                 String adresse="";
-                try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
-			PreparedStatement stmt = connection.prepareStatement(sql); // On crée un statement pour exécuter une requête
-			// Un ResultSet pour parcourir les enregistrements du résultat
+                try (Connection connection = myDataSource.getConnection(); 
+			PreparedStatement stmt = connection.prepareStatement(sql); 
 			) {
                          stmt.setInt(1, customerID);
                         try {
                             ResultSet rs = stmt.executeQuery();
-                            if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
-				// On récupère le champ NUMBER de l'enregistrement courant
+                            if (rs.next()) {
 				name = rs.getString("NOM");
                                 adresse= rs.getString("ADRESSE");
                             }
@@ -155,21 +150,18 @@ public class DAO {
 	 * @throws DAOException
 	 */
 	List<CustomerEntity> customersInState(String state) throws DAOException {
-		//throw new UnsupportedOperationException("Pas encore implémenté");
                 ArrayList<CustomerEntity> ListCE= new ArrayList<CustomerEntity>();
                 String sql = "SELECT CUSTOMER_ID AS NUMERO, NAME AS NOM,ADDRESSLINE1 AS ADRESSE FROM CUSTOMER WHERE CUSTOMER.STATE=?";
                 int result=0;
                 String name = "";
                 String adresse="";
-                try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
-			PreparedStatement stmt = connection.prepareStatement(sql); // On crée un statement pour exécuter une requête
-			// Un ResultSet pour parcourir les enregistrements du résultat
+                try (Connection connection = myDataSource.getConnection(); 
+			PreparedStatement stmt = connection.prepareStatement(sql); 
 			) {
                          stmt.setString(1, state);
                         try {
                             ResultSet rs = stmt.executeQuery();
-                            while (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
-				// On récupère le champ NUMBER de l'enregistrement courant
+                            while (rs.next()) {
 				name = rs.getString("NOM");
                                 result=rs.getInt("NUMERO");
                                 adresse=rs.getString("ADRESSE");
